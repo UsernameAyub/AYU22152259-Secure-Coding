@@ -1,15 +1,19 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+from dotenv import load_dotenv
 import os
 from models import db, User, Task
 from routes.auth_routes import auth_bp
 from routes.task_routes import task_bp
 from routes.admin_routes import admin_bp
 
+load_dotenv()
+
+
 # Create Flask application
 app = Flask(__name__)
 
 # Hardcoded secret key (intentionally insecure)
-app.secret_key = "super_secret_key_do_not_share"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 app.config['DEBUG'] = True  # Debug mode enabled (intentionally insecure)
 
 # Configure SQLite database
